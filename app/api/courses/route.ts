@@ -22,10 +22,7 @@ export async function POST(
       }
     });
 
-    return NextResponse.json({
-      message: "Success",
-      course
-    })
+    return NextResponse.json(course)
 
   } catch (error) {
     console.log("[COURSES]", error);
