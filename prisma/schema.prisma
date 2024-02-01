@@ -21,9 +21,9 @@ model Course {
   isPublished Boolean @default(false)
 
   categoryId String?
-  category Category? @relation(fields: [categoryId], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id]) // 1 to 1
 
-  attachments Attachment[]
+  attachments Attachment[] // 1 to Many
 
   createdAt DateTime @default(now())
   updateAt DateTime @updatedAt
@@ -34,7 +34,7 @@ model Course {
 model Category {
   id String @id @default(uuid())
   name String @unique
-  courses Course[]
+  courses Course[] // 1 to Many
 }
 
 model Attachment {
@@ -43,7 +43,7 @@ model Attachment {
   url String @db.Text
 
   courseId String
-  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade) // 1 to 1, can be delete when Course delete the attachment
 
   createdAt DateTime @default(now())
   updateAt DateTime @updatedAt
