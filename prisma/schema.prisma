@@ -112,3 +112,12 @@ model Purchase {
 
   @@index([courseId])
 }
+
+model StripeCustomer {
+  id               String @id @default(uuid())
+  userId           String @unique
+  stripeCustomerId String @unique
+
+  createAt         DateTime @default(now())
+  updateAt         DateTime @updatedAt
+}
