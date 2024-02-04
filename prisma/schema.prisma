@@ -6,47 +6,109 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider      = "mysql"
+  url           = env("DATABASE_URL")
+  relationMode  = "prisma"
 }
 
 model Course {
-  id String @id @default(uuid())
-  userId String
-  title String @db.Text
+  id          String  @id @default(uuid())
+  userId      String
+  title       String  @db.Text
   description String? @db.Text
-  imageUrl String? @db.Text
-  price Float?
+  imageUrl    String? @db.Text
+  price       Float?
   isPublished Boolean @default(false)
 
-  categoryId String?
-  category Category? @relation(fields: [categoryId], references: [id]) // 1 to 1
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id]) // 1 to 1
 
   attachments Attachment[] // 1 to Many
+  chapters    Chapter[]
+  purchases   Purchase[]
 
-  createdAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
 
   @@index([categoryId])
 }
 
 model Category {
-  id String @id @default(uuid())
-  name String @unique
+  id      String @id @default(uuid())
+  name    String @unique
   courses Course[] // 1 to Many
 }
 
 model Attachment {
-  id String @id @default(uuid())
-  name String
-  url String @db.Text
+  id        String @id @default(uuid())
+  name      String
+  url       String @db.Text
 
-  courseId String
-  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade) // 1 to 1, can be delete when Course delete the attachment
+  courseId  String
+  course    Course @relation(fields: [courseId], references: [id], onDelete: Cascade) // 1 to 1, can be delete when Course delete the attachment
 
   createdAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  updateAt  DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model Chapter {
+  id          String  @id @default(uuid())
+  title       String 
+  description String? @db.Text
+  videoUrl    String? @db.Text
+  position    Int
+  isPublished Boolean @default(false)
+  isFree      Boolean @default(false)
+
+  muxData MuxData?
+
+  courseId    String
+  course      Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  userProgress UserProgress[]
+
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model MuxData {
+  id          String @id @default(uuid())
+  assetId     String
+  playbackId  String?
+
+  chapterId   String @unique
+  chapter     Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+}
+
+model UserProgress {
+  id          String @id @default(uuid())
+  userId      String
+  
+  chapterId   String
+  chapter     Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  isCompleted Boolean @default(false)
+
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+
+  @@index([chapterId])
+  @@unique([userId, chapterId])
+}
+
+model Purchase {
+  id       String @id @default(uuid())
+  userId   String
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt()
 
   @@index([courseId])
 }
