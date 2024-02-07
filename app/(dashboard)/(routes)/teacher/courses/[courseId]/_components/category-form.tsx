@@ -54,7 +54,7 @@ export const CategoryForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success("Course updated");
+      toast.success("Category updated");
       toggleEdit();
       router.refresh();
     } catch {

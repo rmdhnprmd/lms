@@ -51,7 +51,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     try {
       // await axios.patch(`/api/courses/${courseId}`, values)
       await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success("Course updated");
+      toast.success("Title updated");
       toggleEdit();
       router.refresh();
     } catch {

@@ -50,7 +50,7 @@ export const PriceForms = ({ initialData, courseId }: PriceFormsProps) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success("Course updated");
+      toast.success("Price updated");
       toggleEdit();
       router.refresh();
     } catch {
