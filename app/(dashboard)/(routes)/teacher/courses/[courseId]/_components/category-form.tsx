@@ -13,7 +13,7 @@ import {
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
+import { Loader2, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -37,6 +37,7 @@ export const CategoryForm = ({
   options,
  }: CategoryFormProps) => {
   const [isEditing, setEditing] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const toggleEdit = () => setEditing((current) => !current);
 
@@ -53,19 +54,28 @@ export const CategoryForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setIsUpdating(true);
+
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success("Category updated");
       toggleEdit();
       router.refresh();
     } catch {
       toast.error("Something went wrong");
+    } finally {
+      setIsUpdating(false);
     }
   };
 
   const selectedOption = options.find((option) => option.value === initialData.categoryId)
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
+      {isUpdating && (
+        <div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
+        <Loader2 className="animate-spin h-6 w-6 text-sky-700" />
+      </div>
+      )}
       <div className="font-medium flex items-center justify-between">
         Course category
         <Button onClick={toggleEdit} variant="ghost">

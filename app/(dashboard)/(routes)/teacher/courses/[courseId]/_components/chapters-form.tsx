@@ -35,7 +35,9 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const toggleCreating = () => setIsCreating((current) => !current);
+  const toggleCreating = () => {
+    setIsCreating((current) => !current);
+  }
 
   const router = useRouter();
 
