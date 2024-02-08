@@ -95,6 +95,7 @@ export const ChapterDescriptionForm = ({ initialData, courseId, chapterId }: Cha
             />
           )}
         </div>
+        
       )}
       {isEditing && (
         <Form {...form}>
