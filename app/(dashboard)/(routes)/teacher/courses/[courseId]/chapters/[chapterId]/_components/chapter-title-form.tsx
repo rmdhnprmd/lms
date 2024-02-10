@@ -51,7 +51,7 @@ export const ChapterTitleForm = ({ initialData, courseId, chapterId }: ChapterTi
     try {
       setIsUpdating(true);
       await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
-      toast.success("Chapter title updated");
+      toast.success("Title updated");
       toggleEdit();
       router.refresh();
     } catch {

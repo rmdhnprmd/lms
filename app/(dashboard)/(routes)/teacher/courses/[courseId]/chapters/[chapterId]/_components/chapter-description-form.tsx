@@ -53,7 +53,7 @@ export const ChapterDescriptionForm = ({ initialData, courseId, chapterId }: Cha
     try {
       setIsUpdating(true);
       await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
-      toast.success("Chapter description updated");
+      toast.success("Description updated");
       toggleEdit();
       router.refresh();
     } catch {
