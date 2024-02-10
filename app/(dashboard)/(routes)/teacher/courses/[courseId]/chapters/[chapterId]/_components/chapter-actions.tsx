@@ -31,7 +31,11 @@ export const ChapterActions = ({
       if(isPublished) {
         await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/unpublish`);
         toast.success("Chapter unpublished");
+      } else {
+        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/publish`);
+        toast.success("Chapter published")
       }
+      router.refresh();
     } catch {
       toast.error("Something went wrong");
     } finally {
@@ -62,7 +66,7 @@ export const ChapterActions = ({
         </div>
       )}
       <Button
-        onClick={() => {}}
+        onClick={onClick}
         disabled={disabled || isLoading}
         variant="outline"
         size="sm"
