@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -27,6 +29,8 @@ const formSchema = z.object({
 });
 
 const CreatePage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,17 +43,26 @@ const CreatePage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setIsLoading(true);
+
       const res = await axios.post("/api/courses", values);
       router.push(`/teacher/courses/${res.data.id}`);
       toast.success("Course created");
     } catch {
       toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6">
-      <div>
+      <div className="relative">
+        {isLoading && (
+          <div className="absolute h-full w-full top-0 right-0 rounded-m flex items-center justify-center">
+            <Loader2 className="animate-spin h-6 w-6 text-sky-700" />
+          </div>
+        )}
         <h1 className="text-2xl">Name your course</h1>
         <p className="text-sm text-slate-600">
           What would you like to name your course? Don&apos;t worry, you can

@@ -52,12 +52,16 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setIsUpdating(true);
+
       await axios.post(`/api/courses/${courseId}/chapters`, values);
       toast.success("Chapter created");
       toggleCreating();
       router.refresh();
     } catch {
       toast.error("Something went wrong");
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -105,7 +109,7 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4"
+            className="relative space-y-4 mt-4"
           >
             <FormField
               control={form.control}
