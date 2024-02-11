@@ -3,18 +3,47 @@
 import { Button } from "@/components/ui/button";
 import { Course } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal, Pencil, Trash } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/lib/format";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { ConfirmModal } from "@/components/modals/confirm-modal";
+
+const ActionsCellContent = ({ id }: { id: string }) => {
+  const router = useRouter();
+  console.log(id);
+
+  const onDelete = async () => {
+    try {
+      await axios.delete(`/api/courses/${id}`);
+      toast.success("Course deleted");
+      router.refresh();
+    } catch {
+      toast.error("Something went wrong");
+    }
+  };
+
+  return (
+    <ConfirmModal onConfirm={onDelete}>
+      <Button className="w-full h-full tracking-[0.32px] text-red-600 hover:text-red-600 flex items-center justify-start cursor-default px-[8px] py-[6px] shrink-0 relative" variant={"ghost"}>
+        <Trash className="h-4 w-4 mr-2 text-red-600" />
+        Delete
+      </Button>
+    </ConfirmModal>
+  );
+};
 
 export const columns: ColumnDef<Course>[] = [
   {
@@ -47,12 +76,8 @@ export const columns: ColumnDef<Course>[] = [
     cell: ({ row }) => {
       const price = parseFloat(row.getValue("price") || "0");
 
-      return (
-        <div>
-          {formatPrice(price)}
-        </div>
-      )
-    }
+      return <div>{formatPrice(price)}</div>;
+    },
   },
   {
     accessorKey: "isPublished",
@@ -71,27 +96,20 @@ export const columns: ColumnDef<Course>[] = [
       const isPublished = row.getValue("isPublished") || false;
 
       return (
-        <Badge className={cn(
-          "bg-slate-500",
-          isPublished && "bg-sky-700"
-        )}>
+        <Badge className={cn("bg-slate-500", isPublished && "bg-sky-700")}>
           {isPublished ? "Published" : "Draft"}
         </Badge>
-      )
-    }
+      );
+    },
   },
   {
     id: "actions",
     cell: ({ row }) => {
       const { id } = row.original;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="h-4 w-6 p-0"
-            >
+            <Button variant="ghost" className="h-4 w-6 p-0">
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
@@ -103,6 +121,8 @@ export const columns: ColumnDef<Course>[] = [
                 Edit
               </DropdownMenuItem>
             </Link>
+            <DropdownMenuSeparator />
+            <ActionsCellContent id={id} />
           </DropdownMenuContent>
         </DropdownMenu>
       );

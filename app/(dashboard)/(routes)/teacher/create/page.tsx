@@ -47,6 +47,7 @@ const CreatePage = () => {
 
       const res = await axios.post("/api/courses", values);
       router.push(`/teacher/courses/${res.data.id}`);
+      router.refresh();
       toast.success("Course created");
     } catch {
       toast.error("Something went wrong");
