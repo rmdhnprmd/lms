@@ -70,7 +70,7 @@ export const ChapterDescriptionForm = ({ initialData, courseId, chapterId }: Cha
         <Loader2 className="animate-spin h-6 w-6 text-sky-700" />
       </div>
       )}
-      <div className="font-medium flex items-center justify-between">
+      <div className="font-light flex items-center justify-between">
         Chapter description
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
