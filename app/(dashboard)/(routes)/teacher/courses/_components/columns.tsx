@@ -23,7 +23,6 @@ import { ConfirmModal } from "@/components/modals/confirm-modal";
 
 const ActionsCellContent = ({ id }: { id: string }) => {
   const router = useRouter();
-  console.log(id);
 
   const onDelete = async () => {
     try {
