@@ -17,6 +17,9 @@ module.exports = withUt({
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      aeonik: ["var(--font-aeonik)"]
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
