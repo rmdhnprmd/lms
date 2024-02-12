@@ -13,8 +13,6 @@ async function main() {
         {name: "Accounting"},
         {name: "Engineering"},
         {name: "Filming"},
-        {name: "Cooking"},
-        {name: "Video Editing"},
       ]
     });
 
