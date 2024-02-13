@@ -71,7 +71,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
         </div>
       )}
       <div className="font-light flex items-center justify-between">
-        Course title
+        Course title:
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>

@@ -77,7 +77,7 @@ export const CategoryForm = ({
       </div>
       )}
       <div className="font-light flex items-center justify-between">
-        Course category
+        Course category:
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>

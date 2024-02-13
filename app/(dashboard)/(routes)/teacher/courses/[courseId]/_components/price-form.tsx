@@ -71,7 +71,7 @@ export const PriceForms = ({ initialData, courseId }: PriceFormsProps) => {
       </div>
       )}
       <div className="font-light flex items-center justify-between">
-        Course price
+        Course price:
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>

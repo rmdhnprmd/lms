@@ -72,7 +72,7 @@ export const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps)
         </div>
       )}
       <div className="font-light flex items-center justify-between">
-        Course description
+        Course description:
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
