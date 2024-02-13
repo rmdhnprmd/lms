@@ -69,7 +69,7 @@ export const ChapterTitleForm = ({ initialData, courseId, chapterId }: ChapterTi
       </div>
       )}
       <div className="font-light flex items-center justify-between">
-        Chapter title
+        Chapter title:
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>

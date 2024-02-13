@@ -71,7 +71,7 @@ export const ChapterDescriptionForm = ({ initialData, courseId, chapterId }: Cha
       </div>
       )}
       <div className="font-light flex items-center justify-between">
-        Chapter description
+        Chapter description:
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>

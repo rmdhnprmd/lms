@@ -70,7 +70,7 @@ export const ChapterAccessForm = ({ initialData, courseId, chapterId }: ChapterA
       </div>
       )}
       <div className="font-light flex items-center justify-between">
-        Chapter access
+        Chapter access:
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
