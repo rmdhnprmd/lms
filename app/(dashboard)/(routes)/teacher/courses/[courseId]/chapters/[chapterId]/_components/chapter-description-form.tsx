@@ -32,7 +32,11 @@ const formSchema = z.object({
   description: z.string().min(1),
 });
 
-export const ChapterDescriptionForm = ({ initialData, courseId, chapterId }: ChapterDescriptionFormProps) => {
+export const ChapterDescriptionForm = ({
+  initialData,
+  courseId,
+  chapterId,
+}: ChapterDescriptionFormProps) => {
   const [isEditing, setEditing] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -43,8 +47,8 @@ export const ChapterDescriptionForm = ({ initialData, courseId, chapterId }: Cha
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: initialData?.description || ""
-    }
+      description: initialData?.description || "",
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -52,7 +56,10 @@ export const ChapterDescriptionForm = ({ initialData, courseId, chapterId }: Cha
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsUpdating(true);
-      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values
+      );
       toast.success("Description updated");
       toggleEdit();
       router.refresh();
@@ -66,9 +73,9 @@ export const ChapterDescriptionForm = ({ initialData, courseId, chapterId }: Cha
   return (
     <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
       {isUpdating && (
-        <div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
-        <Loader2 className="animate-spin h-6 w-6 text-sky-700" />
-      </div>
+        <div className="absolute rounded-md h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
+          <Loader2 className="animate-spin h-6 w-6 text-sky-700" />
+        </div>
       )}
       <div className="font-light flex items-center justify-between">
         Chapter description:
@@ -84,18 +91,17 @@ export const ChapterDescriptionForm = ({ initialData, courseId, chapterId }: Cha
         </Button>
       </div>
       {!isEditing && (
-        <div className={cn(
-          "text-sm mt-2",
-          !initialData.description && "text-slate-500 italic"
-        )}>
+        <div
+          className={cn(
+            "text-sm mt-2",
+            !initialData.description && "text-slate-500 italic"
+          )}
+        >
           {!initialData.description && "No description"}
           {initialData.description && (
-            <Preview 
-              value={initialData.description}
-            />
+            <Preview value={initialData.description} />
           )}
         </div>
-        
       )}
       {isEditing && (
         <Form {...form}>
@@ -109,9 +115,7 @@ export const ChapterDescriptionForm = ({ initialData, courseId, chapterId }: Cha
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Editor
-                      {...field}
-                    />
+                    <Editor {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

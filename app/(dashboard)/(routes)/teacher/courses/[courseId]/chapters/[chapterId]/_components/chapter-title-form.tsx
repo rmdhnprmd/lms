@@ -64,7 +64,7 @@ export const ChapterTitleForm = ({ initialData, courseId, chapterId }: ChapterTi
   return (
     <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
       {isUpdating && (
-        <div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
+        <div className="absolute rounded-md h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
         <Loader2 className="animate-spin h-6 w-6 text-sky-700" />
       </div>
       )}
