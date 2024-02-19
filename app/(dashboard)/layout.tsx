@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import { Navbar } from "./_components/navbar";
 import { Sidebar } from "./_components/sidebar";
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Dashboard | Kursusku',
+    template: '%s | Kursusku' 
+  }
+}
 
 const DashboardLayout = ({
   children
