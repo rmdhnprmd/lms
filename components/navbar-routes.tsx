@@ -7,9 +7,11 @@ import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { SearchInput } from "./search-input";
 import { isTeacher } from "@/lib/teacher";
+import { Suspense } from "react";
+import { Skeleton } from "./ui/skeleton";
 
 export const NavbarRoutes = () => {
-  const {userId} = useAuth();
+  const { userId } = useAuth();
 
   const pathname = usePathname();
 
@@ -24,7 +26,7 @@ export const NavbarRoutes = () => {
           <SearchInput />
         </div>
       )}
-      <div className="flex gap-x-2 ml-auto">
+      <div className="flex gap-x-2 ml-auto items-center">
         {isTeacherPage || isCoursePage ? (
           <Link href="/">
             <Button size="sm" variant="ghost">
@@ -38,7 +40,8 @@ export const NavbarRoutes = () => {
               Teacher mode
             </Button>
           </Link>
-        ): null}
+        ) : null}
+
         <UserButton afterSignOutUrl="/" />
       </div>
     </>
