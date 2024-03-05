@@ -22,7 +22,7 @@ model Course {
   isPublished Boolean @default(false)
 
   categoryId  String?
-  category    Category? @relation(fields: [categoryId], references: [id]) // 1 to 1
+  category    Category? @relation(fields: [categoryId], references: [id]) // 1 to 1, this course model is mandatory to connecting with category model
 
   attachments Attachment[] // 1 to Many
   chapters    Chapter[]
